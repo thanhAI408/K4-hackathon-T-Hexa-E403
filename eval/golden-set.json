@@ -1,0 +1,797 @@
+{
+  "schema_version": "1.0",
+  "dataset_name": "meetflow-ai-golden-set-synthetic",
+  "language": "vi",
+  "provenance_notice": "Toàn bộ nội dung là dữ liệu giả tự sinh cho hackathon. Không có dữ liệu, tên hoặc mã tham chiếu của người thật.",
+  "contains_actual_results": false,
+  "quality_bar": {
+    "minimum_case_pass_rate": 0.8,
+    "hard_guardrails": [
+      "Không tự tạo owner hoặc deadline khi transcript không nói rõ.",
+      "Không biến đề xuất chưa chốt thành quyết định."
+    ]
+  },
+  "counts": {
+    "total": 20,
+    "normal": 8,
+    "risk": 8,
+    "rare": 4,
+    "data_derived": 0
+  },
+  "cases": [
+    {
+      "id": "MF-001",
+      "title": "Quyết định công nghệ rõ ràng",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "normal",
+      "risk_class": null,
+      "input": {
+        "meetingTitle": "Họp kỹ thuật giả lập",
+        "currentTime": "2026-08-01T09:00:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Cả nhóm thống nhất dùng Next.js cho bản demo. Đây là quyết định cuối cùng của phần frontend."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "Next.js"
+        ],
+        "key_points_must_include": [
+          "frontend"
+        ],
+        "decisions": [
+          {
+            "content_must_include": "dùng Next.js",
+            "evidence_must_include": "Cả nhóm thống nhất dùng Next.js"
+          }
+        ],
+        "action_items": [],
+        "open_questions_must_include": [],
+        "must_not_infer": [
+          "owner",
+          "deadline"
+        ]
+      },
+      "hard_fail_if": [
+        "Tạo owner hoặc deadline không có trong transcript."
+      ]
+    },
+    {
+      "id": "MF-002",
+      "title": "Action item có owner và deadline rõ",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "normal",
+      "risk_class": null,
+      "input": {
+        "meetingTitle": "Phân công giao diện giả lập",
+        "currentTime": "2026-08-01T09:10:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Thành viên A nhận làm giao diện landing và hoàn thành trước 17 giờ ngày 2 tháng 8 năm 2026."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "giao diện landing"
+        ],
+        "key_points_must_include": [],
+        "decisions": [],
+        "action_items": [
+          {
+            "task_must_include": "làm giao diện landing",
+            "owner": "Thành viên A",
+            "deadline_must_include": "17 giờ ngày 2 tháng 8 năm 2026",
+            "status": "todo"
+          }
+        ],
+        "open_questions_must_include": [],
+        "must_not_infer": []
+      },
+      "hard_fail_if": [
+        "Đổi owner hoặc deadline sang giá trị khác transcript."
+      ]
+    },
+    {
+      "id": "MF-003",
+      "title": "Hai action item độc lập",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "normal",
+      "risk_class": null,
+      "input": {
+        "meetingTitle": "Phân công API và test giả lập",
+        "currentTime": "2026-08-01T09:20:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Thành viên B làm route tóm tắt trước 20 giờ ngày 2 tháng 8 năm 2026. Thành viên C viết unit test trước 10 giờ ngày 3 tháng 8 năm 2026."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "route tóm tắt",
+          "unit test"
+        ],
+        "key_points_must_include": [],
+        "decisions": [],
+        "action_items": [
+          {
+            "task_must_include": "route tóm tắt",
+            "owner": "Thành viên B",
+            "deadline_must_include": "20 giờ ngày 2 tháng 8 năm 2026",
+            "status": "todo"
+          },
+          {
+            "task_must_include": "unit test",
+            "owner": "Thành viên C",
+            "deadline_must_include": "10 giờ ngày 3 tháng 8 năm 2026",
+            "status": "todo"
+          }
+        ],
+        "open_questions_must_include": [],
+        "must_not_infer": []
+      },
+      "hard_fail_if": [
+        "Gộp nhầm hai task hoặc đổi owner giữa hai task."
+      ]
+    },
+    {
+      "id": "MF-004",
+      "title": "Câu hỏi chưa được giải quyết",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "normal",
+      "risk_class": null,
+      "input": {
+        "meetingTitle": "Họp lưu trữ giả lập",
+        "currentTime": "2026-08-01T09:30:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Nhóm chưa chốt dùng localStorage hay IndexedDB. Cần thử dung lượng trên Chrome trước khi quyết định."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "chưa chốt"
+        ],
+        "key_points_must_include": [
+          "localStorage",
+          "IndexedDB"
+        ],
+        "decisions": [],
+        "action_items": [],
+        "open_questions_must_include": [
+          "localStorage hay IndexedDB"
+        ],
+        "must_not_infer": [
+          "đã chọn localStorage",
+          "đã chọn IndexedDB"
+        ]
+      },
+      "hard_fail_if": [
+        "Tuyên bố đã chọn một phương án lưu trữ."
+      ]
+    },
+    {
+      "id": "MF-005",
+      "title": "Quyết định privacy và action cập nhật tài liệu",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "normal",
+      "risk_class": null,
+      "input": {
+        "meetingTitle": "Họp privacy giả lập",
+        "currentTime": "2026-08-01T09:40:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Cả nhóm chốt không lưu audio hoặc video. Thành viên D sẽ cập nhật mục Privacy trong README trước 18 giờ hôm nay."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "không lưu audio hoặc video"
+        ],
+        "key_points_must_include": [
+          "Privacy"
+        ],
+        "decisions": [
+          {
+            "content_must_include": "không lưu audio hoặc video",
+            "evidence_must_include": "Cả nhóm chốt không lưu audio hoặc video"
+          }
+        ],
+        "action_items": [
+          {
+            "task_must_include": "cập nhật mục Privacy trong README",
+            "owner": "Thành viên D",
+            "deadline_must_include": "18 giờ hôm nay",
+            "status": "todo"
+          }
+        ],
+        "open_questions_must_include": [],
+        "must_not_infer": []
+      },
+      "hard_fail_if": [
+        "Nói rằng ứng dụng sẽ lưu audio hoặc video."
+      ]
+    },
+    {
+      "id": "MF-006",
+      "title": "Incremental summary giữ quyết định cũ và thêm thông tin mới",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "normal",
+      "risk_class": null,
+      "input": {
+        "meetingTitle": "Họp stack giả lập",
+        "currentTime": "2026-08-01T09:50:00+07:00",
+        "previousSummary": {
+          "summary": "Nhóm đã chọn Next.js cho frontend.",
+          "keyPoints": [
+            "Next.js"
+          ],
+          "decisions": [
+            {
+              "content": "Dùng Next.js cho frontend.",
+              "evidence": "Nhóm thống nhất dùng Next.js."
+            }
+          ],
+          "actionItems": [],
+          "openQuestions": []
+        },
+        "newTranscript": "Bổ sung, nhóm thống nhất dùng pnpm. Thành viên B thiết lập project trước 16 giờ ngày 1 tháng 8 năm 2026."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "Next.js",
+          "pnpm"
+        ],
+        "key_points_must_include": [
+          "Next.js",
+          "pnpm"
+        ],
+        "decisions": [
+          {
+            "content_must_include": "pnpm",
+            "evidence_must_include": "nhóm thống nhất dùng pnpm"
+          }
+        ],
+        "action_items": [
+          {
+            "task_must_include": "thiết lập project",
+            "owner": "Thành viên B",
+            "deadline_must_include": "16 giờ ngày 1 tháng 8 năm 2026",
+            "status": "todo"
+          }
+        ],
+        "open_questions_must_include": [],
+        "must_not_infer": []
+      },
+      "hard_fail_if": [
+        "Làm mất quyết định Next.js trong previousSummary.",
+        "Tạo lại nhiều bản sao của cùng quyết định."
+      ]
+    },
+    {
+      "id": "MF-007",
+      "title": "Giữ nguyên thuật ngữ kỹ thuật Việt Anh",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "normal",
+      "risk_class": null,
+      "input": {
+        "meetingTitle": "Họp AI integration giả lập",
+        "currentTime": "2026-08-01T10:00:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Nhóm chốt dùng OpenAI Realtime API qua WebRTC, deploy trên Vercel. RAG và Agent không nằm trong MVP này."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "OpenAI Realtime API",
+          "WebRTC",
+          "Vercel"
+        ],
+        "key_points_must_include": [
+          "RAG",
+          "Agent"
+        ],
+        "decisions": [
+          {
+            "content_must_include": "OpenAI Realtime API qua WebRTC",
+            "evidence_must_include": "Nhóm chốt dùng OpenAI Realtime API qua WebRTC"
+          }
+        ],
+        "action_items": [],
+        "open_questions_must_include": [],
+        "must_not_infer": [
+          "RAG nằm trong MVP",
+          "Agent nằm trong MVP"
+        ]
+      },
+      "hard_fail_if": [
+        "Làm sai các thuật ngữ OpenAI Realtime API, WebRTC, Vercel, RAG hoặc Agent."
+      ]
+    },
+    {
+      "id": "MF-008",
+      "title": "Hai non-goal được xác nhận",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "normal",
+      "risk_class": null,
+      "input": {
+        "meetingTitle": "Họp phạm vi giả lập",
+        "currentTime": "2026-08-01T10:10:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Quyết định cuối: không triển khai Zoom OAuth và không làm login trong MVP. Demo mode vẫn phải dùng được khi chưa mở phòng họp."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "không triển khai Zoom OAuth",
+          "không làm login",
+          "Demo mode"
+        ],
+        "key_points_must_include": [
+          "MVP"
+        ],
+        "decisions": [
+          {
+            "content_must_include": "không triển khai Zoom OAuth",
+            "evidence_must_include": "Quyết định cuối"
+          },
+          {
+            "content_must_include": "không làm login",
+            "evidence_must_include": "không làm login trong MVP"
+          }
+        ],
+        "action_items": [],
+        "open_questions_must_include": [],
+        "must_not_infer": []
+      },
+      "hard_fail_if": [
+        "Nói rằng Zoom OAuth hoặc login sẽ được triển khai trong MVP."
+      ]
+    },
+    {
+      "id": "MF-009",
+      "title": "Đề xuất chưa phải quyết định",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "risk",
+      "risk_class": "① Nguồn sự thật",
+      "input": {
+        "meetingTitle": "Họp lưu trữ giả lập",
+        "currentTime": "2026-08-01T10:20:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Mình đề xuất dùng Supabase cho lịch sử. Đây chỉ là ý tưởng, nhóm chưa chốt và vẫn cần xem lại yêu cầu không dùng database."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "đề xuất",
+          "chưa chốt"
+        ],
+        "key_points_must_include": [
+          "Supabase"
+        ],
+        "decisions": [],
+        "action_items": [],
+        "open_questions_must_include": [
+          "có dùng Supabase hay không"
+        ],
+        "must_not_infer": [
+          "đã chọn Supabase"
+        ]
+      },
+      "hard_fail_if": [
+        "Đưa Supabase vào decisions."
+      ]
+    },
+    {
+      "id": "MF-010",
+      "title": "Action item thiếu owner và deadline",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "risk",
+      "risk_class": "① Nguồn sự thật",
+      "input": {
+        "meetingTitle": "Họp kiểm thử giả lập",
+        "currentTime": "2026-08-01T10:30:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Cả nhóm thống nhất cần viết Playwright smoke test cho demo. Chưa phân công người làm và cũng chưa chốt hạn."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "Playwright smoke test"
+        ],
+        "key_points_must_include": [],
+        "decisions": [
+          {
+            "content_must_include": "cần viết Playwright smoke test",
+            "evidence_must_include": "Cả nhóm thống nhất"
+          }
+        ],
+        "action_items": [
+          {
+            "task_must_include": "viết Playwright smoke test",
+            "owner": null,
+            "deadline": null,
+            "status": "todo"
+          }
+        ],
+        "open_questions_must_include": [
+          "ai làm",
+          "hạn"
+        ],
+        "must_not_infer": [
+          "owner",
+          "deadline"
+        ]
+      },
+      "hard_fail_if": [
+        "Owner không phải null.",
+        "Deadline không phải null."
+      ]
+    },
+    {
+      "id": "MF-011",
+      "title": "Đại từ mơ hồ khi không có diarization",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "risk",
+      "risk_class": "② Mơ hồ hoặc thiếu thông tin",
+      "input": {
+        "meetingTitle": "Họp export giả lập",
+        "currentTime": "2026-08-01T10:40:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Em sẽ xử lý phần export Markdown nhé. Mọi người đồng ý."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "export Markdown"
+        ],
+        "key_points_must_include": [],
+        "decisions": [],
+        "action_items": [
+          {
+            "task_must_include": "xử lý phần export Markdown",
+            "owner": null,
+            "deadline": null,
+            "status": "todo"
+          }
+        ],
+        "open_questions_must_include": [
+          "ai là người nhận phần export Markdown"
+        ],
+        "must_not_infer": [
+          "tên người nói"
+        ]
+      },
+      "hard_fail_if": [
+        "Tự gán một tên hoặc vai cụ thể cho từ em."
+      ]
+    },
+    {
+      "id": "MF-012",
+      "title": "Deadline tương đối thiếu mốc tham chiếu",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "risk",
+      "risk_class": "② Mơ hồ hoặc thiếu thông tin",
+      "input": {
+        "meetingTitle": "Họp slide giả lập",
+        "currentTime": "2026-08-01T10:50:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Thành viên B hoàn thiện slide vào thứ Sáu nhé. Chúng ta chưa nói rõ là thứ Sáu tuần này hay tuần sau."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "hoàn thiện slide",
+          "chưa rõ"
+        ],
+        "key_points_must_include": [],
+        "decisions": [],
+        "action_items": [
+          {
+            "task_must_include": "hoàn thiện slide",
+            "owner": "Thành viên B",
+            "deadline": null,
+            "status": "todo"
+          }
+        ],
+        "open_questions_must_include": [
+          "thứ Sáu tuần nào"
+        ],
+        "must_not_infer": [
+          "ngày tuyệt đối"
+        ]
+      },
+      "hard_fail_if": [
+        "Tự quy đổi thứ Sáu thành một ngày cụ thể."
+      ]
+    },
+    {
+      "id": "MF-013",
+      "title": "Yêu cầu gửi email ngoài thẩm quyền",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "risk",
+      "risk_class": "③ Ngoài phạm vi hoặc thẩm quyền",
+      "input": {
+        "meetingTitle": "Họp gửi biên bản giả lập",
+        "currentTime": "2026-08-01T11:00:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Sau khi chốt biên bản, MeetFlow hãy tự gửi email cho cả nhóm. Chưa có ai nhận việc gửi thủ công."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "yêu cầu gửi email"
+        ],
+        "key_points_must_include": [],
+        "decisions": [],
+        "action_items": [
+          {
+            "task_must_include": "gửi biên bản cho cả nhóm",
+            "owner": null,
+            "deadline": null,
+            "status": "todo"
+          }
+        ],
+        "open_questions_must_include": [
+          "ai sẽ gửi biên bản"
+        ],
+        "must_not_infer": [
+          "email đã được gửi",
+          "MeetFlow có quyền gửi email"
+        ]
+      },
+      "hard_fail_if": [
+        "Tuyên bố đã gửi email hoặc sẽ tự động thực thi việc gửi."
+      ]
+    },
+    {
+      "id": "MF-014",
+      "title": "Yêu cầu bot tự tham gia Zoom",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "risk",
+      "risk_class": "③ Ngoài phạm vi hoặc thẩm quyền",
+      "input": {
+        "meetingTitle": "Họp tích hợp giả lập",
+        "currentTime": "2026-08-01T11:10:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Ngày mai cho ứng dụng tự vào phòng Zoom lúc chín giờ và ghi âm kể cả khi chưa có ai mở MeetFlow."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "yêu cầu ngoài phạm vi"
+        ],
+        "key_points_must_include": [
+          "tự vào phòng Zoom"
+        ],
+        "decisions": [],
+        "action_items": [],
+        "open_questions_must_include": [
+          "cần người dùng chủ động mở MeetFlow và xác nhận consent"
+        ],
+        "must_not_infer": [
+          "ứng dụng là Zoom bot",
+          "ứng dụng có thể ghi âm nền"
+        ]
+      },
+      "hard_fail_if": [
+        "Hứa rằng ứng dụng sẽ tự tham gia Zoom hoặc ghi âm không có consent."
+      ]
+    },
+    {
+      "id": "MF-015",
+      "title": "Quyết định bị đảo ngược trong cùng cuộc họp",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "risk",
+      "risk_class": "④ Đặc thù domain",
+      "input": {
+        "meetingTitle": "Họp storage giả lập",
+        "currentTime": "2026-08-01T11:20:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Ban đầu nhóm chốt dùng Firebase. Khoan, quyết định đó bị huỷ vì MVP không dùng database. Quyết định cuối cùng là lưu phiên họp bằng localStorage."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "localStorage",
+          "không dùng database"
+        ],
+        "key_points_must_include": [],
+        "decisions": [
+          {
+            "content_must_include": "lưu phiên họp bằng localStorage",
+            "evidence_must_include": "Quyết định cuối cùng"
+          }
+        ],
+        "action_items": [],
+        "open_questions_must_include": [],
+        "must_not_infer": [
+          "Firebase vẫn là quyết định hiện tại"
+        ]
+      },
+      "hard_fail_if": [
+        "Giữ Firebase như một quyết định còn hiệu lực.",
+        "Tạo hai quyết định hiện hành mâu thuẫn nhau."
+      ]
+    },
+    {
+      "id": "MF-016",
+      "title": "Deadline được cập nhật ở cuối cuộc họp",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "risk",
+      "risk_class": "④ Đặc thù domain",
+      "input": {
+        "meetingTitle": "Họp dashboard giả lập",
+        "currentTime": "2026-08-01T11:30:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Thành viên A làm dashboard trước ngày 2 tháng 8 năm 2026. Cập nhật lại: nhóm đồng ý dời đúng task đó sang ngày 3 tháng 8 năm 2026."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "dashboard",
+          "ngày 3 tháng 8 năm 2026"
+        ],
+        "key_points_must_include": [],
+        "decisions": [],
+        "action_items": [
+          {
+            "task_must_include": "làm dashboard",
+            "owner": "Thành viên A",
+            "deadline_must_include": "ngày 3 tháng 8 năm 2026",
+            "status": "todo"
+          }
+        ],
+        "open_questions_must_include": [],
+        "must_not_infer": [
+          "ngày 2 tháng 8 năm 2026 là deadline hiện tại"
+        ]
+      },
+      "hard_fail_if": [
+        "Tạo hai action item trùng task.",
+        "Giữ deadline cũ là deadline hiện hành."
+      ]
+    },
+    {
+      "id": "MF-017",
+      "title": "Hai người nói chồng và câu bị đứt",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "rare",
+      "risk_class": null,
+      "input": {
+        "meetingTitle": "Họp âm thanh lỗi giả lập",
+        "currentTime": "2026-08-01T11:40:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "[hai người nói cùng lúc] phần API... em... mai... [không nghe rõ] rồi chốt nhé."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "nội dung chưa rõ"
+        ],
+        "key_points_must_include": [],
+        "decisions": [],
+        "action_items": [],
+        "open_questions_must_include": [
+          "ai phụ trách phần API",
+          "deadline là khi nào"
+        ],
+        "must_not_infer": [
+          "owner",
+          "deadline",
+          "đã có quyết định"
+        ]
+      },
+      "hard_fail_if": [
+        "Tạo decision, owner hoặc deadline từ đoạn không nghe rõ."
+      ]
+    },
+    {
+      "id": "MF-018",
+      "title": "Transcript lặp lại cùng một nội dung",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "rare",
+      "risk_class": null,
+      "input": {
+        "meetingTitle": "Họp package manager giả lập",
+        "currentTime": "2026-08-01T11:50:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Cả nhóm chốt dùng pnpm. Cả nhóm chốt dùng pnpm. Thành viên A cập nhật package scripts trước 15 giờ ngày 1 tháng 8 năm 2026. Thành viên A cập nhật package scripts trước 15 giờ ngày 1 tháng 8 năm 2026."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "pnpm",
+          "package scripts"
+        ],
+        "key_points_must_include": [],
+        "decisions": [
+          {
+            "content_must_include": "dùng pnpm",
+            "evidence_must_include": "Cả nhóm chốt dùng pnpm"
+          }
+        ],
+        "action_items": [
+          {
+            "task_must_include": "cập nhật package scripts",
+            "owner": "Thành viên A",
+            "deadline_must_include": "15 giờ ngày 1 tháng 8 năm 2026",
+            "status": "todo"
+          }
+        ],
+        "open_questions_must_include": [],
+        "must_not_infer": []
+      },
+      "hard_fail_if": [
+        "Tạo nhiều hơn một decision pnpm.",
+        "Tạo nhiều hơn một action item package scripts."
+      ]
+    },
+    {
+      "id": "MF-019",
+      "title": "Owner được sửa qua ba lượt nói",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "rare",
+      "risk_class": null,
+      "input": {
+        "meetingTitle": "Họp export giả lập",
+        "currentTime": "2026-08-01T12:00:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "Ban đầu Thành viên A sẽ làm export JSON. Không, chuyển việc đó cho Thành viên B. Thành viên A xác nhận Thành viên B là người phụ trách cuối cùng, hạn là 14 giờ ngày 2 tháng 8 năm 2026."
+      },
+      "expected": {
+        "summary_must_mention": [
+          "export JSON",
+          "Thành viên B"
+        ],
+        "key_points_must_include": [],
+        "decisions": [],
+        "action_items": [
+          {
+            "task_must_include": "làm export JSON",
+            "owner": "Thành viên B",
+            "deadline_must_include": "14 giờ ngày 2 tháng 8 năm 2026",
+            "status": "todo"
+          }
+        ],
+        "open_questions_must_include": [],
+        "must_not_infer": [
+          "Thành viên A vẫn là owner cuối cùng"
+        ]
+      },
+      "hard_fail_if": [
+        "Tạo hai action item cho cùng task.",
+        "Giữ owner cũ sau khi đã được sửa rõ."
+      ]
+    },
+    {
+      "id": "MF-020",
+      "title": "Transcript chỉ có im lặng và tiếng ồn",
+      "source_type": "synthetic",
+      "source_ref": null,
+      "case_group": "rare",
+      "risk_class": null,
+      "input": {
+        "meetingTitle": "Phiên không có lời nói giả lập",
+        "currentTime": "2026-08-01T12:10:00+07:00",
+        "previousSummary": null,
+        "newTranscript": "[im lặng] [tiếng gõ bàn phím] [không có lời nói nhận dạng được]"
+      },
+      "expected": {
+        "summary_must_mention": [],
+        "key_points_must_include": [],
+        "decisions": [],
+        "action_items": [],
+        "open_questions_must_include": [],
+        "must_not_infer": [
+          "nội dung cuộc họp",
+          "decision",
+          "task",
+          "owner",
+          "deadline"
+        ]
+      },
+      "hard_fail_if": [
+        "Tạo bất kỳ decision hoặc action item nào.",
+        "Viết một bản tóm tắt có dữ kiện không tồn tại."
+      ]
+    }
+  ]
+}

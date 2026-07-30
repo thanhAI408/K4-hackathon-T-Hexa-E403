@@ -94,3 +94,135 @@ Dữ liệu trong `data/` là dữ liệu thật của khoá học (đã ẩn da
 6. Sau sự kiện, **xoá các bản sao data pack** khỏi máy cá nhân và các công cụ đã upload nếu ban tổ chức yêu cầu.
 
 Vi phạm được xử lý theo quy định của khoá và có thể ảnh hưởng trực tiếp đến điểm của nhóm.
+
+---
+
+## MeetFlow AI — Prototype của nhóm
+
+> Trạng thái tài liệu: bản chuẩn bị cho hackathon. Những trường có nhãn
+> [NHÓM CẦN ĐIỀN] hoặc [CHƯA XÁC MINH] chưa phải bằng chứng hay kết quả đã đạt.
+
+### Thông tin nhóm
+
+| Trường | Nội dung |
+|---|---|
+| Tên nhóm | [NHÓM CẦN ĐIỀN: TÊN NHÓM] |
+| Zone | [NHÓM CẦN ĐIỀN: ZONE] |
+| Thành viên 1 | [NHÓM CẦN ĐIỀN: MÃ HV — HỌ TÊN — PHẦN PHỤ TRÁCH] |
+| Thành viên 2 | [NHÓM CẦN ĐIỀN: MÃ HV — HỌ TÊN — PHẦN PHỤ TRÁCH] |
+| Thành viên 3 | [NHÓM CẦN ĐIỀN: MÃ HV — HỌ TÊN — PHẦN PHỤ TRÁCH] |
+| Thành viên 4 | [NHÓM CẦN ĐIỀN: MÃ HV — HỌ TÊN — PHẦN PHỤ TRÁCH] |
+| Thành viên 5 | [NHÓM CẦN ĐIỀN NẾU CÓ: MÃ HV — HỌ TÊN — PHẦN PHỤ TRÁCH] |
+
+### Sản phẩm
+
+**MeetFlow AI** — *Biến cuộc họp thành quyết định và hành động.*
+
+MeetFlow AI là prototype thuộc **Hướng C — Làn mở**, phục vụ học viên hoặc
+nhóm dự án của khoá khi họp trực tuyến. Ứng dụng nhận âm thanh mà người dùng đã
+được phép ghi, tạo transcript, rồi tách các ý chính, quyết định, công việc,
+người phụ trách, deadline và câu hỏi còn mở.
+
+**Problem hypothesis — chưa được xác nhận bằng khảo sát:** Một thành viên vừa
+tham gia thảo luận vừa ghi biên bản có thể bỏ sót quyết định hoặc công việc,
+khiến nhóm không rõ ai làm gì sau buổi họp.
+
+**Solution:** Tự động ghi transcript; chỉ ghi nhận owner, deadline và quyết định
+khi transcript có căn cứ rõ. Thông tin thiếu được để trống hoặc đánh dấu cần
+xác nhận để người dùng sửa trước khi xuất biên bản.
+
+### Demo flow dự kiến
+
+1. Mở landing page và chọn **Bắt đầu cuộc họp**.
+2. Xác nhận đã có sự đồng ý của người tham gia.
+3. Chọn microphone, âm thanh màn hình, hoặc cả hai.
+4. Quan sát live transcript và bản tóm tắt tăng dần.
+5. Kiểm tra một case mơ hồ: hệ thống không tự tạo owner/deadline.
+6. Sửa một action item, kết thúc phiên và tải Markdown hoặc JSON.
+7. Nếu chưa có phòng họp, dùng **Demo mode — Dữ liệu mô phỏng**.
+
+### Tech stack
+
+- Next.js App Router, React, TypeScript strict
+- Tailwind CSS và component UI tương đương shadcn/ui
+- OpenAI JavaScript SDK, OpenAI Realtime Transcription và Responses API
+- Zod cho request/response schema
+- localStorage hoặc IndexedDB; không dùng database trong MVP
+- Vitest; browser smoke test khi môi trường cho phép
+- pnpm; deploy tương thích Vercel
+
+### Chạy local
+
+Yêu cầu Node.js và pnpm theo phiên bản ghi trong codebase/README.md.
+
+    cd codebase
+    pnpm install
+    Copy-Item .env.example .env.local
+    # Tự điền OPENAI_API_KEY trong .env.local; không commit file này.
+    pnpm dev
+
+Mở http://localhost:3000. Media capture chỉ hoạt động trên localhost hoặc HTTPS.
+Không có API key vẫn có thể kiểm tra demo flow bằng dữ liệu mô phỏng; trạng thái
+đó không được tính là lời gọi AI thật.
+
+### Quality checks
+
+    cd codebase
+    pnpm lint
+    pnpm typecheck
+    pnpm test
+    pnpm build
+
+### Deploy Vercel
+
+- Root Directory trên Vercel phải là codebase.
+- Khai báo OPENAI_API_KEY và OPENAI_SUMMARY_MODEL trong Vercel Environment
+  Variables; không đưa giá trị secret vào source hoặc log.
+- Chỉ promote production sau khi lint, typecheck, test, build và preview smoke
+  test đều đạt.
+- URL: **[CHƯA DEPLOY — NHÓM CẦN ĐIỀN URL VERCEL]**
+
+### Working và mock
+
+Trạng thái kiểm tra tại máy phát triển ngày 30/07/2026:
+
+| Hạng mục | Trạng thái |
+|---|---|
+| Landing, workspace, demo, pause/resume/end, history | Browser smoke pass ở viewport 1366×768; console không có error |
+| Export Markdown/JSON | Unit test pass; thao tác click đã smoke test nhưng file tải xuống chưa được xác nhận ngoài headless browser |
+| Microphone và system-audio capture | [CHƯA XÁC MINH THỦ CÔNG TRÊN CHROME DESKTOP] |
+| Realtime hoặc near real-time transcription | [CHƯA XÁC MINH VỚI OPENAI_API_KEY] |
+| Incremental summary bằng AI | [CHƯA XÁC MINH VỚI OPENAI_API_KEY] |
+| Demo transcript | Browser smoke pass; mock có chủ đích và có badge “Dữ liệu mô phỏng” |
+| Demo summary khi không có API key | Browser smoke pass; có nhãn “Mock summary” |
+
+### Privacy
+
+- Chỉ ghi âm khi tất cả người tham gia đã đồng ý.
+- Không lưu raw audio hoặc video.
+- Không upload video và không phát lại input audio ra loa.
+- Không log transcript đầy đủ, nội dung audio hoặc API key ở server.
+- Dữ liệu phiên họp MVP chỉ lưu trong trình duyệt.
+- Dữ liệu demo là dữ liệu giả tự sinh.
+
+### Known limitations
+
+- System audio phụ thuộc trình duyệt và nguồn share; tối ưu cho Chrome desktop.
+- Speaker diarization chưa được hỗ trợ đầy đủ, vì vậy owner mơ hồ phải để trống.
+- Dữ liệu chỉ tồn tại trên một trình duyệt; chưa có đồng bộ nhiều người.
+- Đây không phải Zoom/Google Meet/Teams bot và không tự tham gia phòng họp.
+- Không có login, payment, multi-workspace hoặc calendar/email automation.
+
+### Artifact và bằng chứng
+
+- AI Spec: spec.md
+- Golden set synthetic: eval/golden-set.json
+- Hướng dẫn eval: eval/README.md
+- Mẫu kết quả chưa chạy: eval/results-template.md
+- Mẫu feedback chưa có người thử: validation/feedback-template.md
+- Hướng dẫn reflection: reflection/README.md
+- Screenshot landing: [codebase/public/meetflow-landing.png](codebase/public/meetflow-landing.png)
+- Screenshot workspace: [codebase/public/meetflow-workspace.png](codebase/public/meetflow-workspace.png)
+
+Không có số liệu khảo sát, tên willing user, feedback hay kết quả eval nào được
+tạo giả trong các artifact trên.
