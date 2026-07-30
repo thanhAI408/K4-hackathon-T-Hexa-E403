@@ -1,279 +1,233 @@
-# AI SPEC — MeetFlow AI · Nhóm [NHÓM CẦN ĐIỀN] · Zone [NHÓM CẦN ĐIỀN]
+# AI SPEC — MeetFlow AI · Nhóm T-Hexa · Zone E403
 
-Hướng: [ ] A — VLearn  [ ] B — Trợ lý Học viên  [x] C — Làn mở
-
+Hướng: [ ] A — VLearn  [ ] B — Trợ lý Học viên  [x] C — Làn mở  
 Loại: [ ] Tối ưu tính năng có sẵn  [x] Tính năng mới
 
-> Trạng thái: **DRAFT CÓ PLACEHOLDER**. File này không tuyên bố đã có khảo sát,
-> willing users, validation, kết quả eval, AI trace hay checkpoint đúng hạn.
-> Nhóm chỉ thay placeholder bằng bằng chứng thật có thể kiểm tra lại.
+> Trạng thái ngày 30/07/2026: **Working MVP đã deploy production; khảo sát định
+> lượng đã hoàn thành; evaluation production và validation usability chưa chạy
+> đủ.** Mọi khoảng trống được ghi rõ, không tạo kết quả hoặc quote giả.
 
 ## §1. User & Job
 
 ### Job executor và workflow
 
-- **Job executor:** một thành viên nhóm dự án/hackathon của khoá đang tham gia
-  cuộc họp trực tuyến qua Zoom, Google Meet hoặc Microsoft Teams.
-- **Workflow hiện tại — giả thuyết cần khảo sát:** tham gia thảo luận → tự ghi
-  chú rời rạc → hỏi lại quyết định và người phụ trách → tổng hợp và gửi biên bản.
-- **Alternative hiện tại — cần khảo sát:** ghi tay, nhắn lại trong nhóm, xem bản
-  ghi cuộc họp, dùng công cụ tóm tắt phổ thông, hoặc không lập biên bản.
-- Worksheet/sơ đồ: **[NHÓM CẦN ĐÍNH KÈM SAU JTBD INTERVIEW]**
+- **Job executor:** một thành viên nhóm dự án/hackathon đang tham gia cuộc họp
+  trực tuyến qua Zoom, Google Meet hoặc Microsoft Teams.
+- **Workflow hiện tại:** tham gia thảo luận → cố ghi chú hoặc nhớ nội dung → cuối
+  buổi tự tổng hợp/hỏi lại → gửi quyết định và việc cần làm cho nhóm.
+- **Alternative hiện tại theo khảo sát:** cố tập trung toàn bộ buổi họp; hỏi lại
+  thành viên; chờ/đề xuất ban tổ chức gửi tổng kết; dùng công cụ khác.
+- **Nguồn evidence:** `evidence/survey-results.md` và
+  `evidence/survey-responses.xlsx`.
 
 ### Core JTBD
 
 Khi đang họp trực tuyến cùng nhóm dự án, tôi muốn nắm lại chính xác những gì đã
-được thống nhất và ai cần làm gì, để cả nhóm có thể tiếp tục công việc mà không
-phải hỏi lại sau buổi họp.
+được thống nhất và ai cần làm gì, để cả nhóm tiếp tục công việc mà không phải hỏi
+lại hoặc xem lại toàn bộ buổi họp.
 
 ### Problem statement
 
-Một thành viên nhóm dự án đang vừa tham gia thảo luận vừa ghi biên bản có thể bỏ
-sót quyết định hoặc công việc, khiến cả nhóm không rõ việc tiếp theo và người
-chịu trách nhiệm sau buổi họp.
-
-> Đây là giả thuyết sản phẩm, chưa phải pain đã được evidence xác nhận.
+Một thành viên nhóm dự án vừa tham gia thảo luận vừa cố ghi nhớ nội dung có thể
+bỏ sót quyết định hoặc công việc, khiến nhóm không rõ việc tiếp theo, người phụ
+trách hoặc deadline sau buổi họp.
 
 ### Evidence
 
-- Đường evidence dự kiến: **A — khảo sát người dùng thật**.
-- Cỡ mẫu: **[NHÓM CẦN ĐIỀN SAU KHẢO SÁT: n ≥ 20 NGƯỜI NGOÀI NHÓM]**
-- Tỷ lệ xác nhận: **[NHÓM CẦN ĐIỀN SAU KHẢO SÁT: %; CHỈ ĐẠT KHI ≥ 50%]**
-- Câu hỏi và từng câu trả lời nguyên văn:
-  **[NHÓM CẦN THÊM LOG KHẢO SÁT CÓ THỂ KIỂM TRA LẠI]**
-- Quote 1: **[NHÓM CẦN ĐIỀN QUOTE THẬT + NGUỒN]**
-- Quote 2: **[NHÓM CẦN ĐIỀN QUOTE THẬT + NGUỒN]**
-- Quote 3: **[NHÓM CẦN ĐIỀN QUOTE THẬT + NGUỒN]**
-- Quote 4: **[NHÓM CẦN ĐIỀN QUOTE THẬT + NGUỒN]**
-- Quote 5: **[NHÓM CẦN ĐIỀN QUOTE THẬT + NGUỒN]**
+Khảo sát ngày 30/07/2026 ghi nhận **36 phản hồi**:
 
-Data pack VLearn hiện không được dùng để khẳng định pain cuộc họp. Golden set
-synthetic trong eval/ chỉ là dữ liệu kiểm thử, không phải evidence người dùng.
+- **33/36 (91,7%)** tham gia ít nhất 3 cuộc họp online mỗi tuần.
+- **31/36 (86,1%)** không kiểm soát được 100% nội dung buổi họp dài hơn 60 phút.
+- **18/36 (50,0%)** chỉ kiểm soát được 25–50% nội dung.
+- **29/36 (80,6%)** không thường xuyên nhận được tổng kết cuối buổi.
+- **26/36 (72,2%)** đồng thời bỏ sót một phần nội dung và không thường xuyên có
+  tổng kết — đây là **pain proxy** được định nghĩa trước khi tính.
+- **18/36 (50,0%)** chọn phương án AI Agent voice → text + tổng hợp, nhiều nhất
+  trong các phương án.
+- **30/36 (83,3%)** sẵn sàng sử dụng; **35/36 (97,2%)** sẵn sàng hoặc cân nhắc.
+
+**Giới hạn evidence:** form không thu tên, không có câu trả lời mở và không hỏi
+số phút lãng phí. Do đó, khảo sát đạt bằng chứng định lượng về pain/nhu cầu, nhưng
+chưa thay thế 3 willing users có tên và vòng validation sau khi dùng prototype.
 
 ## §2. Impact & quyết định chọn
 
-Các ứng viên dưới đây là khung so sánh; chưa có con số khảo sát nên chưa được
-tuyên bố là bảng impact hoàn chỉnh.
-
-| Ứng viên | Bao nhiêu người gặp | Tần suất | Tốn gì mỗi lần | Build nổi? | Quyết định |
-|---|---:|---:|---|---|---|
-| A. Biên bản hành động tăng dần trong cuộc họp | [CẦN ĐO] | [CẦN ĐO] | [CẦN ĐO PHÚT/VIỆC BỎ SÓT] | Có thể trong MVP | Chọn tạm thời |
-| B. Chỉ tóm tắt sau khi họp xong | [CẦN ĐO] | [CẦN ĐO] | [CẦN ĐO] | Có | Ứng viên loại tạm thời |
-| C. Nhắc deadline và đồng bộ calendar tự động | [CẦN ĐO] | [CẦN ĐO] | [CẦN ĐO] | Không phù hợp phạm vi MVP | Ứng viên loại tạm thời |
+| Ứng viên | Bao nhiêu người gặp / tín hiệu | Tần suất hoặc chi phí quan sát được | Build nổi? | Quyết định |
+|---|---|---|---|---|
+| **A. Biên bản hành động tăng dần trong cuộc họp** | 26/36 pain proxy; 18/36 chọn AI Agent; 30/36 sẵn sàng | 33/36 họp ≥3 lần/tuần; 31/36 bỏ sót một phần nội dung | Đã build + deploy | **Chọn** |
+| **B. Chỉ tóm tắt sau cuộc họp** | 29/36 không thường xuyên có tổng kết | Giải quyết thiếu tổng kết nhưng không xác nhận owner/deadline ngay khi đang họp | Có | Loại khỏi lát cắt |
+| **C. Nhắc deadline + đồng bộ calendar** | Khảo sát chưa đo nhu cầu này | Sai deadline có cost-of-error cao; cần quyền ghi lịch và integration | Không phù hợp MVP | Loại |
 
 ### Ứng viên đã loại
 
-- **B — tóm tắt sau cuộc họp:** chưa giải quyết nhu cầu nhìn thấy chỗ mơ hồ để
-  xác nhận ngay; **[NHÓM CẦN KIỂM CHỨNG LÝ DO NÀY BẰNG KHẢO SÁT]**.
-- **C — tự động nhắc và đồng bộ:** cần integration, quyền ghi dữ liệu và xử lý
-  sai deadline có cost-of-error cao; nằm ngoài lát cắt hackathon.
+- **B — tóm tắt sau họp:** hữu ích nhưng không giúp người dùng phát hiện và sửa
+  chỗ mơ hồ ngay trong cuộc họp.
+- **C — calendar automation:** mở rộng thẩm quyền, yêu cầu integration và có rủi
+  ro thực thi sai deadline.
 
 ### Ứng viên chọn
 
-Chọn tạm thời **A — biên bản hành động tăng dần** vì có thể demo end-to-end
-trong năm phút và thể hiện rõ hành vi khi thiếu căn cứ. Quyết định cuối cùng
-phải được bổ sung bằng số:
-**[NHÓM CẦN ĐIỀN LÝ DO CHỌN BẰNG IMPACT SAU KHẢO SÁT]**.
+Chọn **A — biên bản hành động tăng dần** vì có evidence nhu cầu lặp lại, có thể
+demo end-to-end trong 5 phút và cho thấy quyết định AI trung tâm: phân biệt
+“đã chốt” với “mới đề xuất”, đồng thời không đoán owner/deadline.
 
 ## §3. Giải pháp tương tự đã nghiên cứu
 
-Không được coi danh sách sản phẩm là “đã nghiên cứu” cho đến khi thành viên dùng
-thử và ghi lại flow cụ thể.
-
-| Sản phẩm | Flow quan sát | Đáng học | Đáng né | MeetFlow khác gì |
+| Sản phẩm | Flow quan sát từ tài liệu chính thức | Đáng học | Đáng né trong MVP | MeetFlow khác gì |
 |---|---|---|---|---|
-| Otter.ai | [NHÓM CẦN DÙNG THỬ] | [CẦN GHI QUAN SÁT] | [CẦN GHI QUAN SÁT] | [CẦN ĐỐI CHIẾU] |
-| Fireflies.ai hoặc sản phẩm tương đương | [NHÓM CẦN DÙNG THỬ] | [CẦN GHI QUAN SÁT] | [CẦN GHI QUAN SÁT] | [CẦN ĐỐI CHIẾU] |
+| Otter.ai | Có thể kết nối lịch, tự tham gia Zoom/Meet/Teams, tạo live transcript, live summary và action items liên kết transcript | Summary trực tiếp; action item có căn cứ transcript | Auto-join và lưu recording làm tăng phạm vi privacy/integration | Người dùng tự chọn nguồn âm thanh; không auto-join; không lưu audio/video |
+| Fireflies.ai | Có live transcript, notes, action items; sau họp có summary và khả năng tải transcript/recording | Live notes và cấu trúc action item | Lưu/tải recording và tự gán participant vượt phạm vi MVP | Owner mơ hồ để null; dữ liệu chỉ lưu local dạng text |
+
+Nguồn:
+- https://otter.ai/zoom
+- https://help.otter.ai/hc/en-us/articles/5093228433687-Conversation-Page-Overview
+- https://fireflies.ai/product/real-time
+- https://guide.fireflies.ai/articles/6653885315-learn-about-the-fireflies-notepad
 
 ## §4. Thiết kế
 
 ### Lát cắt MỘT CÂU
 
-Một thành viên nhóm dự án của khoá đang họp trực tuyến dùng MeetFlow AI để AI
-xác định phát biểu nào là quyết định và công việc đã được thống nhất, từ đó tạo
-biên bản có căn cứ giúp nhóm biết việc gì cần làm sau cuộc họp.
+Một thành viên nhóm dự án đang họp trực tuyến dùng MeetFlow AI để AI xác định
+phát biểu nào là quyết định và công việc đã được thống nhất, từ đó tạo biên bản
+có căn cứ giúp nhóm biết việc gì cần làm sau cuộc họp.
 
 ### Non-goals
 
 1. Không làm login, payment hoặc workspace nhiều người.
 2. Không làm Zoom OAuth hoặc bot tự tham gia phòng họp.
 3. Không gửi email, tạo calendar event hoặc tự thực thi action item.
-4. Không lưu raw audio/video và không lưu dữ liệu ở server/database.
-5. Không hứa speaker diarization chính xác trong MVP.
+4. Không lưu raw audio/video và không dùng database trong MVP.
+5. Không hứa speaker diarization chính xác.
 6. Không thay người dùng phê duyệt biên bản cuối.
 
 ### Mức prototype
 
-- Mục tiêu: [ ] Sketch  [ ] Mock  [x] Working.
-- Phần nhắm tới chạy thật: media capture, transcript Realtime hoặc near
-  real-time, summary route, local history và export.
-- Phần mock có chủ đích: transcript phát theo thời gian trong Demo mode; summary
-  mẫu khi không có API key.
-- Trạng thái thực tế: **[NHÓM CẦN ĐỐI CHIẾU SAU LINT/TEST/BUILD/SMOKE TEST]**.
+- [ ] Sketch  [ ] Mock  [x] **Working**
+- **Chạy thật:** microphone/system audio capture, Realtime WebRTC, near real-time
+  fallback, summary route, local history và export.
+- **Mock có chủ đích:** demo transcript chạy theo timeline; summary mẫu khi không
+  có API key.
+- **Production:** https://meetflow-ai-ruby.vercel.app
+- **Production commit:** `959e8b8`
 
 ### Automation
 
-- [ ] Augment  [x] Conditional  [ ] Automate.
-- Hệ thống tự transcript và tự tách case có căn cứ rõ. Khi owner, deadline hoặc
-  trạng thái “đã quyết định” không chắc, hệ thống để null/đánh dấu cần xác nhận
-  và người dùng quyết định trước khi xuất.
-- Cost-of-error: gán nhầm việc hoặc deadline có thể làm thành viên thực hiện sai
-  và làm nhóm mất niềm tin; chi phí xác nhận trong UI thấp hơn chi phí sửa một
-  biên bản đã gửi.
+- [ ] Augment  [x] **Conditional**  [ ] Automate
+- Case rõ được tự động ghi nhận. Owner/deadline/trạng thái quyết định không chắc
+  được để `null` hoặc đưa vào open questions.
+- **Cost-of-error:** gán nhầm việc hoặc hạn có thể khiến nhóm làm sai; yêu cầu
+  người dùng xác nhận rẻ hơn sửa một biên bản đã chia sẻ.
 
-### §4b. Nguyên tắc HAX/PAIR
+### §4b. HAX/PAIR
 
-| Nguyên tắc | Áp cụ thể vào đâu trong prototype |
+| Nguyên tắc | Áp cụ thể |
 |---|---|
-| G1 — Làm rõ hệ thống làm được gì | Landing và start dialog nói rõ ứng dụng chỉ ghi nguồn âm thanh người dùng chọn, không tự join phòng họp hoặc thực thi công việc. |
-| G2 — Làm rõ nó làm tốt đến đâu | Badge Realtime/Near real-time/Mock; decision có evidence; owner/deadline thiếu được để trống. |
-| G10 — Thu hẹp phạm vi khi nghi ngờ | Phát biểu mơ hồ đi vào “Cần xác nhận” hoặc open questions thay vì bị đoán. |
-| G9 — Sửa dễ dàng | Người dùng có thể sửa/xoá decision, task, owner và deadline trước khi export. |
-| G11 — Giải thích vì sao | Mỗi decision hiển thị trích đoạn evidence ngắn từ transcript. |
-| PAIR — Errors + Graceful Failure | Permission denied, mất system audio, lỗi Realtime và thiếu API key có thông báo riêng cùng đường lui microphone/demo. |
+| G1 — Làm rõ hệ thống làm được gì | Landing/start dialog nói rõ nguồn audio do user chọn; không tự join hay thực thi task |
+| G2 — Làm rõ nó làm tốt đến đâu | Badge Realtime/Near real-time/Mock; hiển thị evidence |
+| G10 — Thu hẹp phạm vi khi nghi ngờ | Owner/deadline mơ hồ để null và tạo câu hỏi |
+| G9 — Sửa dễ dàng | User sửa/xóa decision/action item trước export |
+| G11 — Giải thích vì sao | Decision kèm trích đoạn evidence |
+| PAIR — Graceful failure | Permission denied, thiếu system audio, lỗi Realtime và thiếu key có thông báo/đường lui |
 
-## §5. Kiểu lỗi — 4 lớp chỗ khó + kịch bản
+## §5. Kiểu lỗi — 4 lớp chỗ khó
 
-| # | Tình huống cụ thể | Lớp | Hành vi mong muốn | Nguyên tắc |
-|---:|---|:---:|---|---|
-| 1 | “Hay là dùng Next.js?” mới là đề xuất | ① | Không đưa vào decisions; có thể giữ ở key points hoặc open questions. | G2, G11 |
-| 2 | Transcript có task nhưng không nói owner/deadline | ① | Giữ task; owner và deadline là null; hiện “Cần xác nhận”. | G10 |
-| 3 | Một người nói “em làm phần đó nhé” nhưng không có diarization | ② | Không suy ra tên; owner là null và nêu câu hỏi xác nhận. | G10 |
-| 4 | “Xong thứ Sáu” nhưng thiếu ngày tham chiếu rõ | ② | Giữ nguyên cụm thời gian hoặc để null; không tự đổi thành ngày tuyệt đối. | G10, G9 |
-| 5 | Trong cuộc họp có câu “MeetFlow gửi email cho cả nhóm đi” | ③ | Không thực thi; nếu đó là việc đã giao thì chỉ ghi thành action item. | G1, G17 |
-| 6 | Người dùng muốn ứng dụng tự vào Zoom và ghi âm nền | ③ | Giải thích ngoài phạm vi; hướng dẫn tự chọn nguồn share có đồng ý. | G1 |
-| 7 | Quyết định ban đầu bị huỷ rõ ràng ở đoạn sau | ④ | Summary cuối phản ánh quyết định mới, không giữ quyết định cũ như đang hiệu lực. | G11, G9 |
-| 8 | Deadline của cùng task được đổi ở cuối cuộc họp | ④ | Cập nhật deadline mới có evidence; tránh tạo hai action item trùng. | G11 |
-| 9 | Âm thanh bị mất đoạn nên transcript không có căn cứ | ① | Không lấp nội dung thiếu; báo transcript có khoảng trống và yêu cầu xác nhận. | G2, G10 |
-| 10 | Hai người nói chồng nhau, câu bị đứt | ② | Không gán owner; đưa nội dung chưa rõ vào open questions. | G10 |
-| 11 | Consent chưa được tick | ③ | Chặn hoàn toàn thao tác bắt đầu ghi và giải thích lý do. | G1, G17 |
-| 12 | Câu nói trộn tiếng Việt với API, RAG, Agent và Vercel | ④ | Giữ nguyên thuật ngữ kỹ thuật; không tự dịch hoặc sửa thành từ khác. | G2 |
+| # | Tình huống | Lớp | Hành vi mong muốn |
+|---:|---|:---:|---|
+| 1 | “Hay là dùng Next.js?” | ① | Không tạo decision |
+| 2 | Task rõ nhưng thiếu owner/deadline | ① | Task được giữ; owner/deadline = null |
+| 3 | “Em làm phần đó” không có diarization | ② | Không suy ra tên |
+| 4 | “Xong thứ Sáu” thiếu tuần tham chiếu | ② | Không tự đổi thành ngày tuyệt đối |
+| 5 | Yêu cầu MeetFlow gửi email | ③ | Chỉ ghi yêu cầu/task; không thực thi |
+| 6 | Yêu cầu bot tự vào Zoom | ③ | Từ chối ngoài phạm vi; yêu cầu user mở app và consent |
+| 7 | Quyết định cũ bị huỷ | ④ | Chỉ giữ quyết định mới nhất |
+| 8 | Deadline cùng task được đổi | ④ | Cập nhật deadline; không tạo item trùng |
+| 9 | Âm thanh mất đoạn | ① | Không lấp nội dung thiếu |
+| 10 | Hai người nói chồng | ② | Đưa vào open questions |
+| 11 | Consent chưa tick | ③ | Chặn bắt đầu ghi |
+| 12 | Câu trộn AI/RAG/Agent/API/Vercel | ④ | Giữ nguyên thuật ngữ |
 
-## §6. Bốn đường đi của trải nghiệm
+## §6. Bốn đường đi trải nghiệm
 
-### Happy path
-
-Người dùng xác nhận consent → chọn nguồn âm thanh → transcript delta xuất hiện →
-completed segment được chốt → summary tăng dần → người dùng rà soát → kết thúc
-và export.
-
-### Low-confidence path — lớp ②
-
-Owner hoặc deadline mơ hồ → hệ thống không đoán → trường để trống, item có nhãn
-“Cần xác nhận” → người dùng sửa hoặc giữ trong open questions.
-
-### Failure/không căn cứ — lớp ①
-
-Không có audio track, transcript rỗng hoặc summary không tìm được evidence →
-hiện trạng thái cụ thể, không tạo decision/action giả → đề nghị chuyển sang
-microphone, thử lại hoặc dùng Demo mode.
-
-### Correction path
-
-Người dùng mở item → sửa task/owner/deadline, xoá decision sai hoặc đánh dấu
-“chưa quyết định” → bản sửa được lưu local và dùng cho export tiếp theo.
-
-### Ngoài phạm vi — lớp ③
-
-Hệ thống không gửi email, tạo lịch, tham gia Zoom hay chạy task. UI giải thích
-phạm vi và chỉ cho phép ghi lại yêu cầu như một action item nếu transcript xác
-nhận đó là công việc.
-
-### Case đặc thù domain — lớp ④
-
-Khi một quyết định/deadline bị thay đổi rõ ở phần sau, biên bản phản ánh trạng
-thái mới nhất có evidence; thuật ngữ kỹ thuật Việt–Anh được giữ nguyên.
+- **Happy path:** consent → chọn audio → transcript → summary tăng dần → rà soát
+  → kết thúc → export.
+- **Low-confidence:** thiếu owner/deadline → null/open question → user sửa.
+- **Failure:** không có audio/transcript/evidence → không tạo dữ kiện → thử lại,
+  đổi nguồn hoặc demo mode.
+- **Correction:** sửa/xoá item sai → lưu local → export bản đã duyệt.
+- **Ngoài phạm vi:** không gửi email, tạo lịch hoặc join Zoom.
+- **Domain:** quyết định/deadline mới thay bản cũ; giữ thuật ngữ kỹ thuật.
 
 ## §7. Kiểm thử
 
-### Chiều chất lượng và định nghĩa kiểm chứng được
+### Chiều chất lượng
 
-| Chiều | Pass khi | Fail khi |
+| Chiều | Pass | Fail |
 |---|---|---|
-| Grounded decision | Mỗi decision có câu evidence trực tiếp trong transcript | Có decision không được transcript xác nhận |
-| Action completeness | Task đúng; owner/deadline chỉ điền khi được nói rõ | Tự tạo hoặc gán nhầm owner/deadline |
-| Proposal distinction | Đề xuất chưa chốt không nằm trong decisions | Proposal bị nâng thành quyết định |
-| Ambiguity handling | Thiếu dữ liệu được để null hoặc đưa vào open questions | Hệ thống đoán nhưng không báo |
-| Schema validity | Output parse được bằng Zod đúng schema | Thiếu field, sai kiểu hoặc status không hợp lệ |
-| Term preservation | Tên riêng và thuật ngữ kỹ thuật giữ đúng ý | Dịch/sửa làm thay đổi thuật ngữ hoặc tên |
-
-Hai thành viên phải chấm độc lập cùng ít nhất năm output khó; nếu lệch kết quả,
-định nghĩa cần được sửa và ghi vào §9.
+| Grounded decision | Mỗi decision có evidence trực tiếp | Decision không có căn cứ |
+| Action completeness | Owner/deadline chỉ có khi nói rõ | Tự tạo/gán nhầm |
+| Proposal distinction | Đề xuất chưa chốt không thành decision | Proposal bị nâng thành decision |
+| Ambiguity handling | Thiếu dữ liệu → null/open question | Đoán không báo |
+| Schema validity | Output parse đúng Zod schema | Sai field/kiểu |
+| Term preservation | Giữ đúng tên/thuật ngữ | Làm sai thuật ngữ |
 
 ### Golden set
 
-- File: eval/golden-set.json
-- Hiện có đúng 20 case **synthetic**, gồm 8 case thường, 8 case phủ bốn lớp
-  chỗ khó và 4 case hiếm.
-- Tất cả case có source_type là synthetic và source_ref là null.
-- Không có case nào được tuyên bố lấy từ chatlog thật.
-- Khoảng trống rubric: **[NHÓM CẦN MINING VÀ PHÁT TRIỂN ≥10 CASE TỪ CHATLOG
-  THẬT, GHI MÃ NGUỒN, SAU KHI ĐƯỢC PHÉP; KHÔNG DÁN ĐOẠN DÀI]**.
+- `eval/golden-set.json`: **20 case synthetic**
+- 8 case thường + 8 case phủ 4 lớp + 4 case hiếm
+- Hiện chưa có 10 case data-derived theo yêu cầu provenance của rubric.
 
 ### Quality bar
 
-> Đạt khi **≥80% trong toàn bộ golden set pass tất cả chiều áp dụng**, đồng thời
-> có **0 case tự tạo owner/deadline** và **0 case biến đề xuất chưa chốt thành
-> quyết định**.
+> **≥80% case pass**, đồng thời **0 case tự tạo owner/deadline** và
+> **0 case biến đề xuất chưa chốt thành quyết định**.
 
-Quality bar này là cam kết đề xuất. Thời điểm commit trước hạn cứng:
-**[NHÓM CẦN XÁC MINH COMMIT/TIMESTAMP 23:59 NGÀY 1]**.
+Quality bar đã có trong commit `7cedb03` trước khi xem kết quả.
 
-### Kết quả các lượt chạy
+### Kết quả lượt chạy
 
-- Lượt 1: **[CHƯA CHẠY — KHÔNG CÓ KẾT QUẢ GIẢ]**
-- Model: **[CHƯA GHI; CHỈ ĐIỀN TỪ ENV/RUN THẬT]**
-- Số case pass: **[CHƯA CHẠY] / 20**
-- Tỷ lệ: **[CHƯA CHẠY]**
-- Đối chiếu quality bar: **[CHƯA THỂ KẾT LUẬN]**
-- Log/trace AI thật: **[CHƯA XÁC MINH; KHÔNG GHI API KEY HOẶC RAW AUDIO]**
-
-Mẫu ghi kết quả nằm ở eval/results-template.md.
+- **Chưa chạy production đủ 20 case.**
+- Script đã chuẩn bị: `eval/run-production-eval.mjs`.
+- Chạy bằng: `node eval/run-production-eval.mjs`.
+- Script gọi API production với tốc độ phù hợp rate limit và sinh
+  `eval/run-01-results.json` + `eval/run-01-results.md`.
+- Không điền phần trăm vào spec/slide trước khi script chạy xong.
 
 ## §8. Phân công & kế hoạch
 
-### Phân công có tên
-
-| Phần | Người phụ trách |
-|---|---|
-| Spec và changelog | [NHÓM CẦN ĐIỀN MÃ HV + TÊN] |
-| Evidence và impact | [NHÓM CẦN ĐIỀN MÃ HV + TÊN] |
-| Prompt, schema và golden set | [NHÓM CẦN ĐIỀN MÃ HV + TÊN] |
-| Code và AI integration | [NHÓM CẦN ĐIỀN MÃ HV + TÊN] |
-| UI, validation và demo | [NHÓM CẦN ĐIỀN MÃ HV + TÊN] |
+| Mã HV | Họ tên | Phần phụ trách |
+|---|---|---|
+| **2A202601030** | **Nguyễn Văn Thành — Lead** | Kiến trúc, AI integration, Git/GitHub, Vercel, duyệt bản cuối |
+| 2A202601426 | Nguyễn Hoàng Hải | Khảo sát, evidence, impact, spec §1–§2 |
+| 2A202601530 | Nguyễn Duy Khánh | Prompt, schema, golden set, evaluation |
+| 2A202601068 | Ngô Xuân Ninh | Frontend/UI/UX, media capture, smoke test |
+| 2A202601734 | Nguyễn Chiến Thắng | Validation, feedback log, slide, dry run |
 
 ### Willing users
 
-1. **[NHÓM CẦN ĐIỀN TÊN NGƯỜI THẬT 1 + VAI]**
-2. **[NHÓM CẦN ĐIỀN TÊN NGƯỜI THẬT 2 + VAI]**
-3. **[NHÓM CẦN ĐIỀN TÊN NGƯỜI THẬT 3 + VAI]**
+Khảo sát có **30 phản hồi “Sẵn sàng”**, nhưng không thu tên. Vì rubric yêu cầu
+tên cụ thể, nhóm vẫn phải xin xác nhận nhanh từ ít nhất 3 người ngoài nhóm và ghi:
 
-Không coi danh sách trên là đạt cho đến khi từng người thật đồng ý thử.
+1. [Tên/vai — thời điểm đồng ý]
+2. [Tên/vai — thời điểm đồng ý]
+3. [Tên/vai — thời điểm đồng ý]
 
-### Kế hoạch validation CP5
+### Validation CP5
 
-- Ít nhất năm người ngoài nhóm; có ít nhất hai willing user đã khai.
-- Mỗi người dùng transcript/audio giả, không dùng nội dung họp thật nhạy cảm.
-- Giao task mà không thuyết minh; quan sát thao tác, thời gian và điểm kẹt.
-- Hỏi ba câu:
-  1. Điều gì khó hiểu hoặc khó chịu nhất?
-  2. Kết quả này bạn có tin không — vì sao?
-  3. Bạn có dùng thật không — vì sao hoặc vì sao chưa?
-- Người ghi log: **[NHÓM CẦN ĐIỀN]**
-- Log: validation/feedback-template.md
-- Kết quả: **[CHƯA VALIDATE — KHÔNG TẠO FEEDBACK GIẢ]**
-
-### Multi-prototype
-
-- Trục so sánh dự kiến: tự ghi nhận ngay so với yêu cầu người dùng xác nhận
-  trước khi đưa item vào biên bản.
-- Phương án và bằng chứng thử: **[NHÓM CẦN THỰC HIỆN NẾU KỊP]**
-- Lý do chọn: **[CHƯA CÓ KẾT QUẢ THỬ]**
+- Ít nhất 5 người ngoài nhóm, ưu tiên ≥2 willing users có tên.
+- Task: chạy case chuẩn + case mơ hồ, sửa một item và export.
+- Hỏi 3 câu chuẩn; ghi quan sát và quote thật trong
+  `validation/feedback-log.md`.
+- Điều phối: Nguyễn Chiến Thắng.
+- Ghi log: Nguyễn Hoàng Hải.
+- **Trạng thái:** chưa thực hiện; không có feedback giả.
 
 ## §9. Changelog
 
 | Thời điểm | Đổi gì | Vì sao / bằng chứng |
 |---|---|---|
-| 2026-07-30 | Khởi tạo spec nháp, chọn Hướng C và conditional automation | Theo phạm vi MeetFlow AI và cost-of-error; chưa phải feedback user |
-| [NHÓM CẦN ĐIỀN] | [THAY ĐỔI SAU FEEDBACK HOẶC EVAL] | [TRỎ ĐẾN TEST CASE/QUOTE THẬT] |
-
+| 30/07/2026 | Chọn Hướng C, conditional automation và quality bar 80% | Cost-of-error của owner/deadline |
+| 30/07/2026 | Build, merge PR #1 và deploy production | Commit `959e8b8`, Vercel Ready |
+| 30/07/2026 | Phân tích 36 phản hồi khảo sát | 26/36 pain proxy; 30/36 sẵn sàng |
+| 30/07/2026 | Bổ sung script eval production và slide 6 trang | Chuẩn bị CP5/CP6 |
+| Chưa có | Thay đổi từ validation/eval | Chỉ điền sau dữ liệu thật |
